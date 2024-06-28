@@ -3,18 +3,28 @@ import React from "react";
 class UserClass extends React.Component{
 constructor(props){
     super(props)
-    this.state = {count:0}
+    this.state = {
+        userInfo:"",
+        followers:""
+    }
 }
+
+async componentDidMount(){
+    const data = await fetch("https://api.github.com/users/PraveenReddyGudigopuram");
+    const json = await data.json();
+    this.setState({
+        userInfo:json,
+        followers:json
+    })
+    console.log(json);
+}
+
     render(){
-        const {name} = this.props;
-        const {count} = this.state;
+       const {name,followers} = this.state.userInfo;
         return(
             <div>
-                <button onClick={()=>{
-                    this.setState({
-                        count : this.state.count+1
-                    })
-                }}>Count : {count}</button>
+                <h1>{name}</h1>
+                <h2>{followers}</h2>
             </div>
         )
     }
